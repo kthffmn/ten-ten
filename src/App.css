@@ -1,3 +1,31 @@
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
+.square {
+  margin: 0 auto 5%;
+  height: 0;
+  width: 95%;
+  padding-bottom: 95%; /* = width for a 1:1 aspect ratio */
+  border-radius: 5px;
+  background-color: #E6E6E6;
+}
+
+.jumbotron {
+  margin-top: 15px;
+}
+
 /* colors */
 .teal {
   color: #63C59F;
@@ -29,15 +57,4 @@
 
 .orange {
   color: #D88745;
-}
-
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
