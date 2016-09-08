@@ -1,0 +1,43 @@
+/* colors */
+.teal {
+  color: #63C59F;
+}
+
+.green {
+  color: #99CD48;
+}
+
+.pink {
+  color: #CF6272;
+}
+
+.purple {
+  color: #6A7EC8;
+}
+
+.blue {
+  color: #5FAFDA
+}
+
+.red {
+  color: #C35B4B;
+}
+
+.yellow {
+  color: #F4B83F;
+}
+
+.orange {
+  color: #D88745;
+}
+
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
