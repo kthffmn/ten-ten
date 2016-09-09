@@ -6,8 +6,15 @@ var Column = require('./Column.jsx');
 module.exports = React.createClass({
   render: function(){
     var columns = _.times(this.props.colCount, function(index) {
-      return (<Column xPosition={index} rowCount={this.props.rowCount} key={index}/>);
-    }.bind(this), this);
+      return (
+        <Column
+          xPosition={index}
+          rowCount={this.props.rowCount}
+          key={index}
+          board={this.props.board}
+        />
+      );
+    }.bind(this));
 
     return (
       <div className="board noselect no-gutter">

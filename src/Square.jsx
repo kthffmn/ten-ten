@@ -5,9 +5,10 @@ module.exports = React.createClass({
     return (
       <div
         className="square droppable ui-droppable"
-        data-x-axis={this.props.xPosition}
-        data-y-axis={this.props.yPosition}
-        key={this.props.index}>
+        style={{backgroundColor: this.props.color}}
+        key={this.props.index}
+        onClick={() => this.props.onToggleSquare(this.props.xPosition, this.props.yPosition)}
+        >
       </div>
     );
   }

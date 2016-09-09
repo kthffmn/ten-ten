@@ -1,22 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
+import _ from 'lodash';
 
-var boardColCount = 10,
-    boardRowCount = 10,
-    sandboxColCount = 6,
-    sandboxRowCount = 3;
+const boardColCount = 10;
+const boardRowCount = 10;
+const sandboxColCount = 6;
+const sandboxRowCount = 3;
 
-var Game = require('./Game.jsx');
+const Board = require('./Board.jsx');
+const Scoreboard = require('./Scoreboard.jsx');
+const Sandbox = require('./Sandbox.jsx');
 
-class App extends Component {
+class App extends React.Component {
+  onToggleSquare(x, y) {
+    const position = x + ',' + y
+    const board = {...this.state.board}
+    board[position] = board[position] === 'grey' ? 'blue' : 'grey'
+    this.setState({ board })
+  }
+
+  constructor(props) {
+    super(props);
+    const board = {}
+    _.times(boardRowCount, (y) => {
+      return _.times(boardColCount, (x) => {
+        board[x + ',' + y] = 'grey'
+      });
+    });
+    this.state = { board }
+  }
+
   render() {
     return (
-      <Game
-        boardColCount={boardColCount}
-        boardRowCount={boardRowCount}
-        sandboxColCount={sandboxColCount}
-        sandboxRowCount={sandboxRowCount}
-      />
+      <div className="row">
+        <div className="col-md-6">
+          <Scoreboard score={0}/>
+          <Sandbox
+            colCount={sandboxColCount}
+            rowCount={sandboxRowCount}
+            board={this.state.board}
+          />
+        </div>
+        <Board
+          colCount={boardColCount}
+          rowCount={boardRowCount}
+          onToggleSquare={this.onToggleSquare.bind(this)}
+          board={this.state.board}
+        />
+      </div>
     );
   }
 }
