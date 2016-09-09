@@ -13,7 +13,7 @@ module.exports = React.createClass({
           yPosition={index}
           key={index}
           onToggleSquare={this.props.onToggleSquare}
-          color={this.props.board[position]}
+          color={this.props.grid[position]}
         />
       )
     }.bind(this));
@@ -21,7 +21,6 @@ module.exports = React.createClass({
     return (
       <div
         className="column col-md-1 col-sm-1 col-xs-1"
-        key={this.props.xPosition}
         >
         { squares }
       </div>

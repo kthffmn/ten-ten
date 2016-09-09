@@ -12,7 +12,7 @@ module.exports = React.createClass({
           rowCount={this.props.rowCount}
           key={index}
           onToggleSquare={this.props.onToggleSquare}
-          board={this.props.board}
+          grid={this.props.grid}
         />
       );
     }.bind(this));

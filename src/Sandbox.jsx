@@ -11,7 +11,7 @@ module.exports = React.createClass({
           xPosition={index}
           rowCount={this.props.rowCount}
           key={index}
-          board={this.props.board}
+          grid={this.props.grid}
         />
       );
     }.bind(this));
