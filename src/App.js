@@ -42,8 +42,8 @@ function gridWithRandomShape() {
   SHAPES[random(Object.keys(SHAPES))].forEach(function (v) {
     cordColors[v] = color
   })
-  var grid = emptyGrid(sandboxRowCount, sandboxColCount)
-  grid = {...grid, cordColors}
+  const grid = emptyGrid(sandboxRowCount, sandboxColCount)
+  return {...grid, cordColors}
 }
 
 class App extends React.Component {
