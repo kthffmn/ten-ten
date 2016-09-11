@@ -31,31 +31,31 @@ const emptyGrid = (colCount, rowCount) => (
   ))
 )
 
-const sandboxGrid = (shape, color) => (
-  emptyGrid(sandboxColCount, sandboxRowCount).map((col, x) => (
-    x in shape ? col.map((empty, y) => (
-      shape[x][y] ? color : empty
+const gridWithShape = (grid, left, top, shape, color) => (
+  grid.map((col, x) => (
+    shape[x - left] ? col.map((square, y) => (
+      shape[x - left][y - top] ? color : square
     )) : col
   ))
 )
 
 
 class App extends Component {
-
-  onToggleSquare(x, y) {
-    this.setState({ board: this.state.board.map((col, x_) => (
-      x_ === x ? col.map((color, y_) => (
-        y_ === y ? (color === 'grey' ? 'blue' : 'grey') : color
-      )) : col
-    ))})
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       board: emptyGrid(boardColCount, boardRowCount),
-      sandbox: sandboxGrid(_.sample(SHAPES), _.sample(COLORS))
+      shape: _.sample(SHAPES),
+      color: _.sample(COLORS)
     }
+  }
+
+  placeShape(x, y) {
+    this.setState({
+      board: gridWithShape(this.state.board, x, y, this.state.shape, this.state.color),
+      shape: _.sample(SHAPES),
+      color: _.sample(COLORS)
+    })
   }
 
   render() {
@@ -64,11 +64,12 @@ class App extends Component {
         <div className="col-md-6">
           <Scoreboard score={0}/>
           <Sandbox
-            grid={this.state.sandbox}
+            grid={gridWithShape(emptyGrid(sandboxColCount, sandboxRowCount),
+                                0, 0, this.state.shape, this.state.color)}
           />
         </div>
         <Board
-          onToggleSquare={this.onToggleSquare.bind(this)}
+          placeShape={this.placeShape.bind(this)}
           grid={this.state.board}
         />
       </div>

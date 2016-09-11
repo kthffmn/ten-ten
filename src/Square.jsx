@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default ({ x, y, color, onToggleSquare }) => (
+export default ({ x, y, color, placeShape }) => (
   <div
     className={`square droppable ui-droppable ${color}`}
-    onClick={() => onToggleSquare(x, y)}
+    onClick={() => placeShape(x, y)}
   >
   </div>
 )

@@ -1,7 +1,7 @@
 import React from 'react';
 import Square from './Square';
 
-export default ({ x, squares, onToggleSquare }) => (
+export default ({ x, squares, placeShape }) => (
   <div className="column col-md-1 col-sm-1 col-xs-1">
     {squares.map((square, y) => (
        <Square
@@ -9,7 +9,7 @@ export default ({ x, squares, onToggleSquare }) => (
          x={x}
          y={y}
          color={square}
-         onToggleSquare={onToggleSquare}
+         placeShape={placeShape}
        />
      ))}
   </div>
