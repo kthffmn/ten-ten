@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import _ from 'lodash';
 import R from 'ramda';
+
+const Board = require('./Board.jsx');
+const Scoreboard = require('./Scoreboard.jsx');
+const Sandbox = require('./Sandbox.jsx');
+
 
 const boardColCount = 10;
 const boardRowCount = 10;
 const sandboxColCount = 6;
 const sandboxRowCount = 3;
-
-const Board = require('./Board.jsx');
-const Scoreboard = require('./Scoreboard.jsx');
-const Sandbox = require('./Sandbox.jsx');
 
 const SHAPES = {
   'caterpillar': ['0,0', '1,0', '2,0','3,0', '4,0', '5,0', '6,0'],
@@ -21,10 +22,6 @@ const SHAPES = {
 
 const COLORS = ['teal', 'green', 'pink', 'purple', 'blue', 'red', 'yellow', 'orange']
 
-function random(arr) {
-  const randomIndex = _.random(0, (arr.length - 1));
-  return arr[randomIndex];
-}
 
 function emptyGrid(columnCount, rowCount) {
   const board = {}
@@ -35,6 +32,7 @@ function emptyGrid(columnCount, rowCount) {
   });
   return board;
 }
+const random = arr => arr[_.random(arr.length - 1)];
 
 function gridWithRandomShape() {
   const color = random(COLORS)
@@ -46,7 +44,7 @@ function gridWithRandomShape() {
   return {...grid, cordColors}
 }
 
-class App extends React.Component {
+class App extends Component {
 
   onToggleSquare(x, y) {
     const position = x + ',' + y
