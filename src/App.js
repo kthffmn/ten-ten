@@ -25,8 +25,6 @@ const SHAPES = _.mapValues({
 const COLORS = ['teal', 'green', 'pink', 'purple', 'blue', 'red', 'yellow', 'orange']
 
 
-const random = arr => arr[_.random(arr.length - 1)];
-
 const emptyGrid = (colCount, rowCount) => (
   _.times(colCount, () => (
     _.times(rowCount, () => 'grey')
@@ -56,7 +54,7 @@ class App extends Component {
     super(props);
     this.state = {
       board: emptyGrid(boardColCount, boardRowCount),
-      sandbox: sandboxGrid(SHAPES.vShape, random(COLORS))
+      sandbox: sandboxGrid(_.sample(SHAPES), _.sample(COLORS))
     }
   }
 
