@@ -50,6 +50,12 @@ class App extends Component {
     }
   }
 
+  hover(x, y) {
+    this.setState({
+      mouse: { x, y }
+    })
+  }
+
   placeShape(x, y) {
     this.setState({
       board: gridWithShape(this.state.board, x, y, this.state.shape, this.state.color),
@@ -59,18 +65,22 @@ class App extends Component {
   }
 
   render() {
+    const { board, shape, color, mouse } = this.state
+    const sandboxGrid = gridWithShape(emptyGrid(sandboxColCount, sandboxRowCount),
+                                      0, 0, shape, color)
+    const boardGrid = mouse ? gridWithShape(board, mouse.x, mouse.y, shape, color) : board
     return (
       <div className="row">
         <div className="col-md-6">
           <Scoreboard score={0}/>
           <Sandbox
-            grid={gridWithShape(emptyGrid(sandboxColCount, sandboxRowCount),
-                                0, 0, this.state.shape, this.state.color)}
+            grid={sandboxGrid}
           />
         </div>
         <Board
+          grid={boardGrid}
+          hover={this.hover.bind(this)}
           placeShape={this.placeShape.bind(this)}
-          grid={this.state.board}
         />
       </div>
     );
