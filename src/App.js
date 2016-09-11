@@ -24,7 +24,6 @@ const SHAPES = _.mapValues({
 
 const COLORS = ['teal', 'green', 'pink', 'purple', 'blue', 'red', 'yellow', 'orange']
 
-
 const emptyGrid = (colCount, rowCount) => (
   _.times(colCount, () => (
     _.times(rowCount, () => 'grey')
@@ -38,6 +37,23 @@ const gridWithShape = (grid, left, top, shape, color) => (
     )) : col
   ))
 )
+
+function gridWithoutLines (grid) {
+  const xs = grid.reduce((xs, col, x) => (
+    col.every(square => square !== 'grey') ? [...xs, x] : xs
+  ), [])
+
+  const rowCount = grid[0].length
+  const ys = _.range(rowCount).reduce((ys, y) => (
+    grid.every(col => col[y] !== 'grey') ? [...ys, y] : ys
+  ), [])
+
+  return xs.length || ys.length ? grid.map((col, x) => (
+    xs.includes(x) ? col.map(() => 'grey') : ys.length ? col.map((square, y) => (
+      ys.includes(y) ? 'grey' : square
+    )) : col
+  )) : grid
+}
 
 
 class App extends Component {
@@ -58,7 +74,8 @@ class App extends Component {
 
   placeShape(x, y) {
     this.setState({
-      board: gridWithShape(this.state.board, x, y, this.state.shape, this.state.color),
+      board: gridWithoutLines(gridWithShape(this.state.board, x, y,
+                                            this.state.shape, this.state.color)),
       shape: _.sample(SHAPES),
       color: _.sample(COLORS)
     })
