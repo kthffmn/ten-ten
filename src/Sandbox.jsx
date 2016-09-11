@@ -1,25 +1,14 @@
 import React from 'react';
-import _ from 'lodash';
+import Column from './Column';
 
-var Column = require('./Column.jsx');
-
-module.exports = React.createClass({
-  render: function(){
-    var columns = _.times(this.props.colCount, function(index) {
-      return (
-        <Column
-          xPosition={index}
-          rowCount={this.props.rowCount}
-          key={index}
-          grid={this.props.grid}
-        />
-      );
-    }.bind(this));
-
-    return (
-      <div className="board noselect no-gutter">
-        { columns }
-      </div>
-    );
-  }
-});
+export default ({ grid }) => (
+  <div className="board noselect no-gutter">
+    {grid.map((col, x) => (
+       <Column
+         key={x}
+         x={x}
+         squares={col}
+       />
+     ))}
+  </div>
+)

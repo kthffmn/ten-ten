@@ -1,29 +1,16 @@
 import React from 'react';
-import _ from 'lodash';
+import Square from './Square';
 
-var Square = require('./Square.jsx');
-
-module.exports = React.createClass({
-  render: function() {
-    var squares = _.times(this.props.rowCount, function(index){
-      const position = this.props.xPosition + ',' + index
-      return (
-        <Square
-          xPosition={this.props.xPosition}
-          yPosition={index}
-          key={index}
-          onToggleSquare={this.props.onToggleSquare}
-          color={this.props.grid[position]}
-        />
-      )
-    }.bind(this));
-
-    return (
-      <div
-        className="column col-md-1 col-sm-1 col-xs-1"
-        >
-        { squares }
-      </div>
-    );
-  }
-});
+export default ({ x, squares, onToggleSquare }) => (
+  <div className="column col-md-1 col-sm-1 col-xs-1">
+    {squares.map((square, y) => (
+       <Square
+         key={y}
+         x={x}
+         y={y}
+         color={square}
+         onToggleSquare={onToggleSquare}
+       />
+     ))}
+  </div>
+)

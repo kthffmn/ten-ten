@@ -1,13 +1,9 @@
 import React from 'react';
 
-module.exports = React.createClass({
-  render: function(){
-    return (
-      <div
-        className={"square droppable ui-droppable " + this.props.color}
-        onClick={() => this.props.onToggleSquare(this.props.xPosition, this.props.yPosition)}
-        >
-      </div>
-    );
-  }
-});
+export default ({ x, y, color, onToggleSquare }) => (
+  <div
+    className={`square droppable ui-droppable ${color}`}
+    onClick={() => onToggleSquare(x, y)}
+  >
+  </div>
+)
