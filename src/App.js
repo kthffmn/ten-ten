@@ -24,16 +24,19 @@ const SHAPES = _.mapValues({
 
 const COLORS = ['teal', 'green', 'pink', 'purple', 'blue', 'red', 'yellow', 'orange']
 
+
 const emptyGrid = (colCount, rowCount) => (
   _.times(colCount, () => (
     _.times(rowCount, () => 'grey')
   ))
 )
 
+const emptySandboxGrid = emptyGrid(sandboxColCount, sandboxRowCount)
+
 const gridWithShape = (grid, left, top, shape, color) => (
   grid.map((col, x) => (
     shape[x - left] ? col.map((square, y) => (
-      shape[x - left][y - top] ? color : square
+      shape[x - left][y - top] ? square === 'grey' ? color : 'invalid' : square
     )) : col
   ))
 )
@@ -73,18 +76,20 @@ class App extends Component {
   }
 
   placeShape(x, y) {
-    this.setState({
-      board: gridWithoutLines(gridWithShape(this.state.board, x, y,
-                                            this.state.shape, this.state.color)),
-      shape: _.sample(SHAPES),
-      color: _.sample(COLORS)
-    })
+    const hoverBoard = gridWithShape(this.state.board, x, y,
+                                     this.state.shape, this.state.color);
+    if (hoverBoard.every(col => col.every(color => color !== 'invalid'))) {
+      this.setState({
+        board: gridWithoutLines(hoverBoard),
+        shape: _.sample(SHAPES),
+        color: _.sample(COLORS)
+      })
+    }
   }
 
   render() {
     const { board, shape, color, mouse } = this.state
-    const sandboxGrid = gridWithShape(emptyGrid(sandboxColCount, sandboxRowCount),
-                                      0, 0, shape, color)
+    const sandboxGrid = gridWithShape(emptySandboxGrid, 0, 0, shape, color)
     const boardGrid = mouse ? gridWithShape(board, mouse.x, mouse.y, shape, color) : board
     return (
       <div className="row">

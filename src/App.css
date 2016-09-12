@@ -28,6 +28,10 @@
   background-color: #E6E6E6;
 }
 
+.invalid {
+  background-color: #888;
+}
+
 .teal {
   background-color: #63C59F;
 }
