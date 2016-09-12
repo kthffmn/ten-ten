@@ -43,28 +43,32 @@ const gridWithShape = (grid, left, top, shape, color) => (
   ))
 )
 
-function gridWithoutLines (grid) {
-  const xs = grid.reduce((xs, col, x) => (
+const filledColIndices = grid => (
+  grid.reduce((xs, col, x) => (
     col.every(square => square !== 'grey') ? [...xs, x] : xs
   ), [])
+)
 
-  const rowCount = grid[0].length
-  const ys = _.range(rowCount).reduce((ys, y) => (
+const filledRowIndices = grid => (
+  grid[0].reduce((ys, _, y) => (
     grid.every(col => col[y] !== 'grey') ? [...ys, y] : ys
   ), [])
+)
 
-  return xs.length || ys.length ? grid.map((col, x) => (
+const gridWithoutLines = (grid, xs, ys) => (
+  xs.length || ys.length ? grid.map((col, x) => (
     xs.includes(x) ? col.map(() => 'grey') : ys.length ? col.map((square, y) => (
       ys.includes(y) ? 'grey' : square
     )) : col
   )) : grid
-}
+)
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      score: 0,
       board: emptyGrid(boardColCount, boardRowCount),
       shape: _.sample(SHAPES),
       color: _.sample(COLORS)
@@ -88,12 +92,16 @@ class App extends Component {
   }
 
   placeShape() {
-    const { board, shape, color, mouse } = this.state
+    const { score, board, shape, color, mouse } = this.state
     const hoverBoard = gridWithShape(board, mouse.x, mouse.y, shape, color)
 
     if (hoverBoard.every(col => col.every(color => color !== 'invalid'))) {
+      const xs = filledColIndices(hoverBoard)
+      const ys = filledRowIndices(hoverBoard)
+
       this.setState({
-        board: gridWithoutLines(hoverBoard),
+        score: score + xs.length + ys.length,
+        board: gridWithoutLines(hoverBoard, xs, ys),
         shape: _.sample(SHAPES),
         color: _.sample(COLORS)
       })
@@ -101,13 +109,13 @@ class App extends Component {
   }
 
   render() {
-    const { board, shape, color, mouse } = this.state
+    const { score, board, shape, color, mouse } = this.state
     const sandboxGrid = gridWithShape(emptySandboxGrid, 0, 0, shape, color)
     const boardGrid = mouse ? gridWithShape(board, mouse.x, mouse.y, shape, color) : board
     return (
       <div className="row">
         <div className="col-md-6">
-          <Scoreboard score={0}/>
+          <Scoreboard score={score}/>
           <Sandbox
             grid={sandboxGrid}
             rotate={this.rotate.bind(this)}
