@@ -70,14 +70,19 @@ class App extends Component {
   }
 
   hover(x, y) {
+    const { board, shape } = this.state
     this.setState({
-      mouse: { x, y }
+      mouse: {
+        x: _.clamp(x, board.length - shape.length),
+        y: _.clamp(y, board[0].length - shape[0].length)
+      }
     })
   }
 
-  placeShape(x, y) {
-    const hoverBoard = gridWithShape(this.state.board, x, y,
-                                     this.state.shape, this.state.color);
+  placeShape() {
+    const { board, shape, color, mouse } = this.state
+    const hoverBoard = gridWithShape(board, mouse.x, mouse.y, shape, color)
+
     if (hoverBoard.every(col => col.every(color => color !== 'invalid'))) {
       this.setState({
         board: gridWithoutLines(hoverBoard),
