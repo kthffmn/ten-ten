@@ -10,7 +10,7 @@ import Sandbox from './Sandbox';
 const boardColCount = 10;
 const boardRowCount = 10;
 const sandboxColCount = 6;
-const sandboxRowCount = 3;
+const sandboxRowCount = 6;
 
 const SHAPES = _.mapValues({
   caterpillar: ['xxxxxx'],
@@ -24,6 +24,8 @@ const SHAPES = _.mapValues({
 
 const COLORS = ['teal', 'green', 'pink', 'purple', 'blue', 'red', 'yellow', 'orange']
 
+
+const rotated = shape => _.unzip(shape.map(col => [...col].reverse()))
 
 const emptyGrid = (colCount, rowCount) => (
   _.times(colCount, () => (
@@ -69,6 +71,12 @@ class App extends Component {
     }
   }
 
+  rotate() {
+    this.setState({
+      shape: rotated(this.state.shape)
+    })
+  }
+
   hover(x, y) {
     const { board, shape } = this.state
     this.setState({
@@ -102,6 +110,7 @@ class App extends Component {
           <Scoreboard score={0}/>
           <Sandbox
             grid={sandboxGrid}
+            rotate={this.rotate.bind(this)}
           />
         </div>
         <Board
